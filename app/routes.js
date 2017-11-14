@@ -51,6 +51,27 @@ module.exports = function(app, passport) {
             failureFlash : true // allow flash messages
         }));
 
+
+    // SPID ---------------------------------
+
+	//callback
+	app.post('/login/callback',passport.authenticate('saml', { 
+		successRedirect : '/profile1', // redirect to the secure profile section
+		failureRedirect: '/profile2', 
+		failureFlash: true }), function(req, res) {res.redirect('/');}
+	);
+
+	//authenticate requests
+	app.get('/auth/spid',
+  	passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+  	function(req, res) {
+  	  res.redirect('/');
+  	}
+	);
+
+
+
+
     // facebook -------------------------------
 
         // send to facebook to do the authentication

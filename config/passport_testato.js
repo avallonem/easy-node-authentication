@@ -374,28 +374,23 @@ module.exports = function(passport) {
     // =========================================================================
     // SPID ==================================================================
     // =========================================================================
-        var IdpCert = fs.readFileSync('./testspid_cert.pem', 'utf-8');
+        var IdpCert = fs.readFileSync('./testshib_cert.pem', 'utf-8');
 	var privateKey=fs.readFileSync('./domain.key', 'utf-8');
 	var privateCert=fs.readFileSync('./domain.crt', 'utf-8');
 	var disable_clock_check=-1;
-        var AttributeConsumingServiceIndex=1;
 
 	var samlStr=new SamlStrategy(
 	  {
 	    callbackUrl:'http://sp.dlsocs.com:8080/login/callback',
             path: '/login/callback',
-	    entryPoint: 'https://spidposte.test.poste.it/jod-fs/ssoserviceredirect',
-	    issuer: 'http://sp.dlsocs.com:8080/',
-	    identifierFormat:'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+	    entryPoint: 'https://idp.testshib.org/idp/profile/SAML2/Redirect/SSO',
+	    issuer: 'passport-saml',
+	    identifierFormat:'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
 	    cert: IdpCert,
 	    decryptionPvk: privateKey,
-	    privateCert: privateCert,
-	    acceptedClockSkewMs: disable_clock_check,
-            signatureAlgorithm: 'sha512',
-            attributeConsumingServiceIndex: AttributeConsumingServiceIndex
-
+	    acceptedClockSkewMs: disable_clock_check
 	   }, function(req, done) {
-		var user= req.uid;
+		var user               = req.uid;
 		var string=JSON.stringify(req)
 		return done(string);
             });

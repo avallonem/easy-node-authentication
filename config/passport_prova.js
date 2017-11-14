@@ -374,7 +374,7 @@ module.exports = function(passport) {
     // =========================================================================
     // SPID ==================================================================
     // =========================================================================
-        var IdpCert = fs.readFileSync('./testspid_cert.pem', 'utf-8');
+        var IdpCert = fs.readFileSync('./testshib_cert.pem', 'utf-8');
 	var privateKey=fs.readFileSync('./domain.key', 'utf-8');
 	var privateCert=fs.readFileSync('./domain.crt', 'utf-8');
 	var disable_clock_check=-1;
@@ -384,7 +384,7 @@ module.exports = function(passport) {
 	  {
 	    callbackUrl:'http://sp.dlsocs.com:8080/login/callback',
             path: '/login/callback',
-	    entryPoint: 'https://spidposte.test.poste.it/jod-fs/ssoserviceredirect',
+	    entryPoint: 'https://idp.testshib.org/idp/profile/SAML2/Redirect/SSO',
 	    issuer: 'http://sp.dlsocs.com:8080/',
 	    identifierFormat:'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
 	    cert: IdpCert,
